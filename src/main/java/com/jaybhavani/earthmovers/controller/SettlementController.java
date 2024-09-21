@@ -55,7 +55,6 @@ public class SettlementController {
     {
         Settlement settlement=settlementService.getById(id);
 
-
         Customer customer = new Customer();
         model.addAttribute("customer",customer);
         List<Customer> customerList = customerService.getAllCustomer();

@@ -14,18 +14,18 @@
 
 <div class="container my-5 p-5" style="border:1px solid black;">
     <h4 class="text-center">Add/Modify Settlement</h4>
-    <form class="col-md-6 offset-md-3" th:action="@{/saveSettlement}" method="post" th:object="{settlement}">
+    <form class="col-md-6 offset-md-3" th:action="@{/saveSettlement}" method="post" th:object="${settlement}">
         <div class="row p-2">
             <div class="col-md-6">
                 <label for="date">Date</label>
-                <input type="date" class="form-control" id="date" name="date" th:value="{settlement.date}" placeholder="Enter Date">
+                <input type="date" class="form-control" id="date" name="date" th:value="${settlement.date}" placeholder="Enter Date">
             </div>
             <div class="col-md-6">
                 <label for="name">Name</label>
                 <!--<input type="text" class="form-control" id="name" name="name" placeholder="Enter Name">-->
-                <select class="form-control" id="name" th:field="*{name}" th:object="${customer}" th:value="{settlement.name}">
+                <select class="form-control" id="name" th:field="*{name}" >
                     <option value="">--select option--</option>
-                    <option th:each="customer : ${customerList}" th:value="${customer.id}" th:text="${customer.name}" th:selected="${customer.id}==${settlement.name}"></option>
+                    <option th:each="customer : ${customerList}" th:value="${customer.id}" th:text="${customer.name}" th:selected="${customer.id == settlement.name}"></option>
                 </select>
             </div>
         </div>
