@@ -1,38 +1,35 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <title>Add Today`s Entry</title>
-</head>
-<body>
-
 <div th:replace="~{fragments/header :: header}"></div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<body>
+<div th:replace="~{fragments/header :: navbar}"></div>
 
 <div class="container my-5 p-5" style="border:1px solid black;">
     <h4 class="text-center">Add/Modify Entry</h4>
-    <form class="col-md-6 offset-md-3" th:action="@{/saveTodaysEntry}" method="post" >
+    <form class="col-md-6 offset-md-3" th:action="@{/saveTodaysEntry}" method="post" th:object="${entry}">
+        <h2 th:if="${entry.id != null}">Edit Entry</h2>
+        <h2 th:if="${entry.id == null}">Add New Entry</h2>
+
+        <!-- Hidden field for the ID (only for editing) -->
+        <input type="hidden" th:if="${entry.id != null}" th:field="*{id}">
         <div class="row p-2">
             <div class="col-md-6">
                 <label for="date">Date</label>
-                <input type="date" class="form-control" id="date" name="date" placeholder="Enter Date">
+                <input type="date" class="form-control" id="date" name="date" th:value="${entry.date}" placeholder="Enter Date">
             </div>
             <div class="col-md-6">
                 <label for="name">Name</label>
                 <!--<input type="text" class="form-control" id="name" name="name" placeholder="Enter Name">-->
-                <select class="form-control" id="name" th:field="*{name}" th:object="${customer}">
+                <select class="form-control" id="name" name="name" th:object="${customer}" th:value="${entry.name}" >
                     <option value="">--select option--</option>
-                    <option th:each="customer : ${customerList}" th:value="${customer.id}" th:text="${customer.name}"></option>
+                    <option th:each="customer : ${customerList}" th:value="${customer.id}" th:text="${customer.name}" th:selected="${customer.id} == ${entry.name}"></option>
                 </select>
             </div>
         </div>
         <div class="row p-2">
             <div class="col-md-6">
                 <label for="machine">Machine</label>
-                <select class="form-control" id="machine" name="machine">
+                <select class="form-control" id="machine" name="machine" th:value="${entry.machine}" th:field="*{machine}" >
                     <option value="">--Please Select--</option>
                     <option value="JCB">JCB</option>
                     <option value="Tractor">Tractor</option>
@@ -41,8 +38,68 @@
             </div>
             <div class="col-md-6">
                 <label for="category">Category</label>
-                <select class="form-control" id="category" name="category">
+                <select class="form-control" id="category" name="category" th:value="${entry.category}" th:field="*{category}" >
                     <option value="">--Please Select--</option>
+                    <option value="rotor">Rotar</option>
+                    <option value="mogda">Mogda</option>
+                    <option value="nangar">Nangar</option>
+                </select>
+            </div>
+        </div>
+        <div class="row p-2">
+            <div class="col-md-6">
+                <label for="area">Area</label>
+                <input type="text" class="form-control" id="area" name="area" th:value="${entry.area}" placeholder="Enter Area">
+            </div>
+            <div class="col-md-6">
+                <label for="hrs">Hours</label>
+                <input type="text" class="form-control" id="hrs" name="hours" th:value="${entry.hours}" placeholder="Enter Hours">
+            </div>
+        </div>
+        <div class="row p-2">
+            <div class="col-md-6">
+                <label for="price">Price</label>
+                <input type="text" class="form-control" id="price" name="price" th:value="${entry.price}" placeholder="Enter Price">
+            </div>
+            <div class="col-md-6">
+            </div>
+        </div>
+        <div class="row p-2">
+            <div style="text-align:center;padding: 5%;">
+                <!--<button type="submit" class="btn btn-primary">Submit</button>-->
+                <button type="submit" class="btn btn-primary" th:text="${entry.id == null ? 'Add Entry' : 'Update Entry'}"></button>
+            </div>
+        </div>
+    </form>
+    <!--<form class="col-md-6 offset-md-3" th:action="@{/saveTodaysEntry}" method="post" >
+        <div class="row p-2">
+            <div class="col-md-6">
+                <label for="date">Date</label>
+                <input type="date" class="form-control" id="date" name="date" placeholder="Enter Date">
+            </div>
+            <div class="col-md-6">
+                <label for="name">Name</label>
+                &lt;!&ndash;<input type="text" class="form-control" id="name" name="name" placeholder="Enter Name">&ndash;&gt;
+                <select class="form-control" id="name" th:field="*{name}" th:object="${customer}">
+                    <option value="">&#45;&#45;select option&#45;&#45;</option>
+                    <option th:each="customer : ${customerList}" th:value="${customer.id}" th:text="${customer.name}"></option>
+                </select>
+            </div>
+        </div>
+        <div class="row p-2">
+            <div class="col-md-6">
+                <label for="machine">Machine</label>
+                <select class="form-control" id="machine" name="machine">
+                    <option value="">&#45;&#45;Please Select&#45;&#45;</option>
+                    <option value="JCB">JCB</option>
+                    <option value="Tractor">Tractor</option>
+                    <option value="PowerTiller">Power Tiller</option>
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label for="category">Category</label>
+                <select class="form-control" id="category" name="category">
+                    <option value="">&#45;&#45;Please Select&#45;&#45;</option>
                     <option value="rotor">Rotar</option>
                     <option value="mogda">Mogda</option>
                     <option value="nangar">Nangar</option>
@@ -72,7 +129,8 @@
                 <button type="submit" class="btn btn-primary">Submit</button>
             </div>
         </div>
-    </form>
+    </form>-->
 </div>
+<div th:replace="~{fragments/header :: footer}"></div>
 </body>
 </html>

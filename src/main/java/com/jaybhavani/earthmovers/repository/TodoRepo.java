@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
-public interface TodoRepo extends JpaRepository<Todo,Integer> {
+public interface TodoRepo extends JpaRepository<Todo,Long> {
 
     @Query(value = "SELECT * FROM Todo WHERE name = ?1", nativeQuery = true)
     List<Todo> findByCustomerId(int id);

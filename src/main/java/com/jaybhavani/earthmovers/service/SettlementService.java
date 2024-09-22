@@ -38,14 +38,15 @@ public class SettlementService {
     {
         settleRepo.save(settlement);
     }
-    public void deleteSettlement(int id)
+
+    public void deleteSettlement(Long id)
     {
-        settleRepo.deleteById(id);
+        settleRepo.deleteById((id));
     }
 
-    public Settlement getById(int id)
+    public Settlement getById(Long id)
     {
-        Settlement settlement1=settleRepo.findById(id).get();
+        Settlement settlement1=settleRepo.findById((id)).get();
         return settlement1;
     }
 }

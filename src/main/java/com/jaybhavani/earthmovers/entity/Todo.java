@@ -9,7 +9,7 @@ import jakarta.persistence.Id;
 public class Todo {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Long id;
     private String date;
     private String name;
     private String machine;
@@ -21,7 +21,7 @@ public class Todo {
     public Todo() {
     }
 
-    public Todo(int id, String date, String name, String machine, String category, String area, String hours, String price) {
+    public Todo(Long id, String date, String name, String machine, String category, String area, String hours, String price) {
         this.id = id;
         this.date = date;
         this.name = name;
@@ -32,11 +32,11 @@ public class Todo {
         this.price = price;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

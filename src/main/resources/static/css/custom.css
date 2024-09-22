@@ -1,0 +1,26 @@
+body {
+        padding-top: 5%;
+        padding-bottom: 5%;
+    }
+
+    .nav-container {
+        position: fixed;
+        width: 100%;
+        top: 0;
+    }
+
+    footer {
+        background: #007bff; /* Change as needed */
+        color: white;
+        padding: 10px;
+        position: fixed;
+        width: 100%;
+        bottom: 0;
+    }
+
+    main {
+        flex: 1; /* Take the remaining space */
+        padding: 60px 20px 40px; /* Space for header and footer */
+        overflow-y: auto; /* Enable scrolling */
+        margin-top: 50px; /* Space for the header */
+    }

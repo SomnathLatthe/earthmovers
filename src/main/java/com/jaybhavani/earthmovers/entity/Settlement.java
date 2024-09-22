@@ -9,7 +9,7 @@ import jakarta.persistence.Id;
 public class Settlement {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Long id;
     private String date;
     private String name;
 
@@ -18,18 +18,18 @@ public class Settlement {
     public Settlement() {
     }
 
-    public Settlement(int id, String date, String name, String price) {
+    public Settlement(Long id, String date, String name, String price) {
         this.id = id;
         this.date = date;
         this.name = name;
         this.price = price;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

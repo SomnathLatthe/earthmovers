@@ -73,12 +73,12 @@ public class TodoService {
         return todoList1;
     }
 
-    public void deleteEntry(int id)
+    public void deleteEntry(Long id)
     {
         todoRepo.deleteById(id);
     }
 
-    public Todo findById(int id)
+    public Todo findById(Long id)
     {
         Todo todo=todoRepo.findById(id).get();
         return todo;

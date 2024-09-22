@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -28,13 +29,33 @@ public class SettlementController {
         return new ModelAndView("settle/getAllSettlements","settlement",settlements);
     }
 
-    @RequestMapping("/addSettlement")
+   /* @RequestMapping("/addSettlement")
     public String addSettlement(Model model)
     {
         Customer customer = new Customer();
         model.addAttribute("customer",customer);
         List<Customer> customerList = customerService.getAllCustomer();
         model.addAttribute("customerList",customerList);
+        return "settle/addSettlement";
+    }*/
+    @RequestMapping("/addEditSettlement")///{id}
+    public String editSettlement(@RequestParam(value = "id", required = false) Long id, Model model)//@PathVariable("id") int id
+    {
+        System.out.println("inside editSettlement SettlementId: "+id);
+        Settlement settlement=null;
+        if(id!=null) {
+            settlement = settlementService.getById(id);
+        }
+        else{
+            settlement = new Settlement();
+        }
+
+        Customer customer = new Customer();
+        model.addAttribute("customer",customer);
+        List<Customer> customerList = customerService.getAllCustomer();
+        model.addAttribute("customerList",customerList);
+
+        model.addAttribute("settlement",settlement);
         return "settle/addSettlement";
     }
     @RequestMapping("/saveSettlement")
@@ -44,23 +65,11 @@ public class SettlementController {
         return "redirect:/getAllSettlements";
     }
     @RequestMapping("/deleteSettlement/{id}")
-    public String deleteSettlement(@PathVariable("id") int id)
+    public String deleteSettlement(@PathVariable("id") Long id)
     {
         settlementService.deleteSettlement(id);
         return "redirect:/getAllSettlements";
     }
 
-    @RequestMapping("/editSettlement/{id}")
-    public String editSettlement(@PathVariable("id") int id,Model model)
-    {
-        Settlement settlement=settlementService.getById(id);
 
-        Customer customer = new Customer();
-        model.addAttribute("customer",customer);
-        List<Customer> customerList = customerService.getAllCustomer();
-        model.addAttribute("customerList",customerList);
-
-        model.addAttribute("settlement",settlement);
-        return "settle/editSettlement";
-    }
 }
